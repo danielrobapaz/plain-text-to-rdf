@@ -1,16 +1,7 @@
 import sys
 from constants import SETUP_USAGE_MESSAGE, SETUP_FLAGS, SETUP_REPEATED_FLAGS
-
-class InvalidCommandLineUsage(Exception):
-    def __init__(self, message: str = ""):
-        self.message = message
-        super().__init__(message)
-
-def get_list_safe(l: list, index: int, default: any = None):
-    try:
-        return l[index]
-    except:
-        return default
+from Exceptions import InvalidCommandLineUsage
+from utils import get_list_safe
     
 class ComandLineArguments:
     def __init__(self, arguments: str) -> None:
