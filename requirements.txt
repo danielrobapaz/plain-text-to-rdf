@@ -38,6 +38,7 @@ murmurhash==1.0.10
 nest-asyncio==1.6.0
 networkx==3.3
 numpy==1.26.4
+nltk==3.8.1
 packaging==24.0
 parso==0.8.4
 platformdirs==4.2.1
