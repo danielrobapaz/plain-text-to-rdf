@@ -160,3 +160,4 @@ class RelationDetectionLayer:
             print(f"Head (Token #{rel['head_id']}): {rel['head']} -> Tail (Token #{rel['tail_id']}): {rel['tail']} (Relation: {rel['relation_description']} [])")
 
     # Pendiente hayar tripleta. Si es verbo, encontrar quien apunta al verbo y a quien apunta el verbo (trippleta fromada). Encontrar la maanera de relacionar adjetivos a los sujetos o verbos (encontrar conector?)
+    # Investigar aquellos que tienen : en la relacion con dos deprel.
