@@ -32,6 +32,13 @@ class Extraction:
         el = EntityLinking.EntityLinking(entities)
         return el.get_linked_entities()
     
+    def display_entities(self) -> None:
+        print('\nEntidades')
+        entities = self.extract_entities()
+
+        for entity in entities:
+            print(f"Entity: {entity} | URIs: {entities[entity]}")
+    
     def display_relations(self) -> None:
         print('\nRelaciones')
         relations = self.extract_relations()

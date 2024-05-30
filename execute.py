@@ -10,12 +10,14 @@ def main() -> None:
     ann = Annotate('Michael Jordan played basket', corenlp_dir)
     eel = Extraction(ann.doc)
 
+    # Data Layer
     ann.display_tokens_and_labels()
     ann.display_dependency_tree()
 
+    # Knowledge Extracion Layer
+    eel.display_entities()
     eel.display_relations()
 
-    print(eel.extract_entities())
 
 if __name__=="__main__":
     main()
