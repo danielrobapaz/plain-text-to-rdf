@@ -6,29 +6,27 @@ from nltk.tree import Tree
 import time
 
 
-class TokenizationLayer:
-    def __init__(self, text, env_path, corenlp_dir):
+class Annotate:
+    def __init__(self, 
+                 text: str,
+                 corenlp_dir: str) -> None:
         self.text = text
-        self.env_path = env_path
         self.corenlp_dir = corenlp_dir
-        self._load_environment()
+        
         self._setup_pipeline()
 
-    def _load_environment(self):
-        dotenv_path = Path(self.env_path)
-        load_dotenv(dotenv_path=dotenv_path)
-        os.environ['CORENLP_HOME'] = self.corenlp_dir
+        self.__process_text()
 
-    def _setup_pipeline(self):
+    def _setup_pipeline(self) -> None:
         self.nlp = stanza.Pipeline('en')
 
-    def process_text(self):
+    def __process_text(self) -> None:
         start_time = time.time()
         self.doc = self.nlp(self.text)
         end_time = time.time()
         print(f"Texto Procesado. Tiempo para procesar el texto: {end_time - start_time:.4f} segundos")
 
-    def get_tokens_as_dict(self):
+    def get_tokens_as_dict(self) -> None:
         tokens_dict = {}
         for sentence in self.doc.sentences:
             for token in sentence.tokens:
@@ -41,7 +39,7 @@ class TokenizationLayer:
                 }
         return tokens_dict
 
-    def get_tokens_as_list(self):
+    def get_tokens_as_list(self) -> None:
         tokens_list = []
         for sentence in self.doc.sentences:
             for token in sentence.tokens:
@@ -58,7 +56,7 @@ class TokenizationLayer:
                     tokens_list.append(token_info)
         return tokens_list
 
-    def display_tokens_and_labels(self):
+    def display_tokens_and_labels(self) -> None:
         print("\nTokens y Etiquetas:")
         start_time = time.time()
         
@@ -75,13 +73,13 @@ class TokenizationLayer:
         end_time = time.time()
         print(f"Tiempo para extraer y mostrar tokens y etiquetas: {end_time - start_time:.4f} segundos\n")
 
-    def to_nltk_tree(self, node):
+    def to_nltk_tree(self, node: Tree) -> Tree:
         if node.deprel == 'root':
             return Tree(node.text, [self.to_nltk_tree(child) for child in self.doc.sentences[0].words if child.head == node.id])
         else:
             return Tree(f'{node.text} ({node.deprel})', [self.to_nltk_tree(child) for child in self.doc.sentences[0].words if child.head == node.id])
 
-    def display_dependency_tree(self):
+    def display_dependency_tree(self) -> None:
         print("Arbol de Dependencias:\n")
         start_time = time.time()
         
