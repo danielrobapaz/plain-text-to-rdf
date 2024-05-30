@@ -1,6 +1,7 @@
 import requests
-import utils
-import constants
+from utils import get_babelfy_url, get_spotlight_url
+from constants import BABELFY_HEADER, SPOTLIGHT_HEADER
+
 
 class EntityLinking:
     def __init__(self, entities: list[str] = ['']) -> None:
@@ -14,8 +15,8 @@ class EntityLinking:
         return self.map
     
     def __get_resource_babelfy(self, entity: str) -> str:
-        headers = constants.BABELFY_HEADER
-        response = requests.get(utils.get_babelfy_url(entity),
+        headers = BABELFY_HEADER
+        response = requests.get(get_babelfy_url(entity),
                                 headers=headers)
 
         if (response.status_code == 200):
@@ -28,8 +29,8 @@ class EntityLinking:
         return None
 
     def __get_resource_spotlight(self, entity: str) -> str:
-        headers = constants.SPOTLIGHT_HEADER
-        response = requests.get(utils.get_spotlight_url(entity),
+        headers = SPOTLIGHT_HEADER
+        response = requests.get(get_spotlight_url(entity),
                                 headers=headers)
         
         if (response.status_code == 200):

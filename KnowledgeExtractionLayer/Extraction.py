@@ -1,54 +1,14 @@
-import stanza
-import os
-from dotenv import load_dotenv
-from pathlib import Path
-from nltk.tree import Tree
-import time
+from stanza import Document
+from constants import DEPREL_DESCRIPTIONS
+from . import EntityLinking
 
-class RelationDetectionLayer:
-    def __init__(self, tokenized_doc):
+class Extraction:
+    def __init__(self, 
+                 tokenized_doc: Document) -> None:
         self.doc = tokenized_doc
-        self.deprel_descriptions = {
-            "acl": "clausal modifier of noun (adjectival clause)",
-            "advcl": "adverbial clause modifier",
-            "advmod": "adverbial modifier",
-            "amod": "adjectival modifier",
-            "appos": "appositional modifier",
-            "aux": "auxiliary",
-            "case": "case marking",
-            "cc": "coordinating conjunction",
-            "ccomp": "clausal complement",
-            "clf": "classifier",
-            "compound": "compound",
-            "conj": "conjunct",
-            "cop": "copula",
-            "csubj": "clausal subject",
-            "dep": "unclassified dependent",
-            "det": "determiner",
-            "discourse": "discourse element",
-            "dislocated": "dislocated elements",
-            "expl": "expletive",
-            "fixed": "fixed multiword expression",
-            "flat": "flat multiword expression",
-            "goeswith": "goes with",
-            "iobj": "indirect object",
-            "list": "list",
-            "mark": "marker",
-            "nmod": "nominal modifier",
-            "nsubj": "nominal subject",
-            "nummod": "numeric modifier",
-            "obj": "object",
-            "obl": "oblique nominal",
-            "orphan": "orphan",
-            "parataxis": "parataxis",
-            "punct": "punctuation",
-            "reparandum": "overridden disfluency",
-            "root": "root",
-            "vocative": "vocative",
-            "xcomp": "open clausal complement"
-        }
+        self.deprel_descriptions = DEPREL_DESCRIPTIONS
 
-    def extract_relations(self):
+    def extract_relations(self) -> None:
         relations = []
         for sentence in self.doc.sentences:
             for word in sentence.words:
@@ -65,7 +25,15 @@ class RelationDetectionLayer:
                     relations.append(relation)
         return relations
 
-    def display_relations(self):
+    def extract_entities(self) -> None:
+        doc_entities = self.doc.entities
+        entities = [e.text  for e in doc_entities]
+        
+        el = EntityLinking.EntityLinking(entities)
+        return el.get_linked_entities()
+    
+    def display_relations(self) -> None:
+        print('\nRelaciones')
         relations = self.extract_relations()
         for rel in relations:
             print(f"Head (Token #{rel['head_id']}): {rel['head']} -> Tail (Token #{rel['tail_id']}): {rel['tail']} (Relation: {rel['relation_description']} [])")
