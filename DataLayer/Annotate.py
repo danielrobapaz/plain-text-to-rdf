@@ -18,7 +18,7 @@ class Annotate:
         self.__process_text()
 
     def _setup_pipeline(self) -> None:
-        self.nlp = stanza.Pipeline('en')
+        self.nlp = stanza.Pipeline(lang='en',verbose=False)
 
     def __process_text(self) -> None:
         start_time = time.time()
