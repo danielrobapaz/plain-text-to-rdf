@@ -59,17 +59,21 @@ class Annotate:
     def display_tokens_and_labels(self) -> None:
         print("\nTokens y Etiquetas:")
         start_time = time.time()
+
+        count = 0
         
         for sentence in self.doc.sentences:
             for token in sentence.tokens:
                 for word in token.words:
+                    count += 1
                     print(f"Token #{word.id}: {token.text}")
                     print(f"  Lemma: {word.lemma}")    
                     print(f"  POS: {word.pos}")       
                     print(f"  XPOS: {word.xpos}")      
                     print(f"  Head: {word.head}")       
                     print(f"  Deprel: {word.deprel}\n")    
-
+        
+        print(f"\nCantidad de Tokens = {count}")
         end_time = time.time()
         print(f"Tiempo para extraer y mostrar tokens y etiquetas: {end_time - start_time:.4f} segundos\n")
 

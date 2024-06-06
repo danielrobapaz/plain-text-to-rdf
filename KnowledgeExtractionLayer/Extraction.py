@@ -36,12 +36,17 @@ class Extraction:
         print('\nEntidades')
         entities = self.extract_entities()
 
+        print(f"\nNumero de Entidades: {len(entities)}")
+
         for entity in entities:
             print(f"Entity: {entity} | URIs: {entities[entity]}")
     
     def display_relations(self) -> None:
         print('\nRelaciones')
         relations = self.extract_relations()
+
+        print(f"\nNumero de Relaciones: {len(relations)}")
+
         for rel in relations:
             print(f"Head (Token #{rel['head_id']}): {rel['head']} -> Tail (Token #{rel['tail_id']}): {rel['tail']} (Relation: {rel['relation_description']} [])")
 
