@@ -15,7 +15,8 @@ class Extraction:
         relations = []
 
         with CoreNLPClient(annotators=["openie"],
-                           endpoint='http://localhost:9000') as client:
+                           endpoint='http://localhost:9000',
+                           be_quiet=True) as client:
             ann = client.annotate(self.doc.text)
 
             for sentence in ann.sentence:
