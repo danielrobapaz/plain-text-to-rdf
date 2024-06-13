@@ -22,8 +22,8 @@ def main() -> None:
     eel = Extraction(ann.doc)
 
     # Data Layer
-    ann.display_tokens_and_labels()
-    ann.display_dependency_tree()
+    #ann.display_tokens_and_labels()
+    #ann.display_dependency_tree()
 
     # Knowledge Extracion Layer
     eel.display_entities()
