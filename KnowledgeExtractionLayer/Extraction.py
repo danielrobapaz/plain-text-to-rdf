@@ -2,6 +2,8 @@ from stanza import Document
 from constants import DEPREL_DESCRIPTIONS
 from . import EntityLinking
 from stanza.server import CoreNLPClient
+import utils
+
 
 class Extraction:
     def __init__(self, 
@@ -21,10 +23,9 @@ class Extraction:
 
             for sentence in ann.sentence:
                 for triple in sentence.openieTriple:
-                    relations.append(triple)
+                    relations.append(utils.map_triple_to_dict(triple))
 
             self.relations = relations
-            client.stop()
 
     def extract_entities(self) -> None:
         doc_entities = self.doc.entities
