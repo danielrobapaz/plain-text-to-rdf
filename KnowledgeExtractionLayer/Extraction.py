@@ -25,7 +25,12 @@ class Extraction:
                 for triple in sentence.openieTriple:
                     relations.append(utils.map_triple_to_dict(triple))
 
-            self.relations = relations
+        self.relations = relations
+        
+        relations_to_link = [r['relation'] for r in relations]
+        el = EntityLinking.EntityLinking(relations_to_link)
+        self.relations_linking = el.get_linked_relations()
+
 
     def extract_entities(self) -> None:
         doc_entities = self.doc.entities
@@ -53,3 +58,5 @@ class Extraction:
         print(f"\nNumero de Relaciones: {len(self.relations)}")
 
         print(self.relations)
+
+        print(self.relations_linking)

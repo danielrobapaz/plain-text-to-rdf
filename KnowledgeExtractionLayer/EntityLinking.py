@@ -42,6 +42,9 @@ class EntityLinking:
     def get_linked_entities(self,) -> dict:
         return self.map
     
+    def get_linked_relations(self, ) -> dict:
+        return self.map
+    
     def __get_resource_babelfy(self, entity: str) -> str:
         headers = BABELFY_HEADER
         response = requests.get(get_babelfy_url(entity),
