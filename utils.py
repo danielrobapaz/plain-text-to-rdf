@@ -21,9 +21,10 @@ def get_babelfy_url(text: str) -> str:
 def get_spotlight_url(text: str) -> str:
     return constants.SPOTLIGHT_API_URL + f"text={text}"
 
-def map_triple_to_dict(triple) -> dict:
+def map_triple_to_dict(triple,tokens_dict) -> dict:
+
     return {
         'subject': triple.subject,
-        'relation': triple.relation,
+        'relation': tokens_dict[triple.relation]["lemma"][0],
         'object': triple.object
     }
