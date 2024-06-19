@@ -10,4 +10,7 @@ class DataOrdering:
                                             r['relation'],
                                             r['object']))
             
+    def get_tripletes(self) -> list[Tripletes]:
+        return self.tripletes
+            
         
