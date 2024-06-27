@@ -11,10 +11,7 @@ def main() -> None:
     corenlp_dir = os.environ.get('CORENLP_HOME', 'corenlp')
     
     ann = Annotate("""Michael Jordan played basket""", corenlp_dir)
-
-    tokens_dict = ann.get_tokens_as_dict()
-
-    print(tokens_dict)
+    ex = Extraction(ann.doc, ann.get_tokens_as_dict())
 
 
 

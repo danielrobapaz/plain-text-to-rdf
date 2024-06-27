@@ -36,7 +36,7 @@ class EntityLinking:
             self.map = map
         else:
             for entity in entities:
-                self.map[entity] = [##self.__get_resource_babelfy(entity),
+                self.map[entity] = [self.__get_resource_babelfy(entity),
                                     self.__get_resource_spotlight(entity)]
 
     def get_linked_entities(self,) -> dict:
