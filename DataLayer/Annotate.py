@@ -12,10 +12,15 @@ class Annotate:
                  corenlp_dir: str) -> None:
         self.text = text
         self.corenlp_dir = corenlp_dir
+        self.tokens_dict = {}
         
         self._setup_pipeline()
 
         self.__process_text()
+
+        self.tokens_dict = self.get_tokens_as_dict()
+
+        self.calculate_statistics()
 
     def _setup_pipeline(self) -> None:
         self.nlp = stanza.Pipeline(lang='en',verbose=False)
@@ -26,7 +31,7 @@ class Annotate:
         end_time = time.time()
         print(f"Texto Procesado. Tiempo para procesar el texto: {end_time - start_time:.4f} segundos")
 
-    def get_tokens_as_dict(self) -> None:
+    def get_tokens_as_dict(self) -> dict:
         tokens_dict = {}
         for sentence in self.doc.sentences:
             for token in sentence.tokens:
@@ -37,7 +42,22 @@ class Annotate:
                     'head': [word.head for word in token.words],
                     'deprel': [word.deprel for word in token.words]
                 }
+        
         return tokens_dict
+
+    def calculate_statistics(self) -> None:
+        number_of_words = len(self.text.split(' '))
+        number_of_tokens = len(set(self.tokens_dict.keys()))
+
+        verbs = [token for token in self.tokens_dict
+                 if self.tokens_dict[token]['pos'][0] == 'VERB']
+        number_of_verbs = len(set(verbs))
+
+        print('Estadisticas de las anotaciones: ')
+        print(f'Cantidad de palabras: {number_of_words}')
+        print(f'Cantidad de tokens: {number_of_tokens}')
+        print(f'Cantidad de verbos: {number_of_verbs}')
+        print('-------------------------')
 
     def get_tokens_as_list(self) -> None:
         tokens_list = []
