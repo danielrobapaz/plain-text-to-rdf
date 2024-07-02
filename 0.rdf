@@ -3,7 +3,7 @@
    xmlns:ns1="http://example.org/"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 >
-  <rdf:Description rdf:about="http://example.org/Michael_Jordan">
-    <ns1:play>basket</ns1:play>
+  <rdf:Description rdf:about="http://example.org/Leonardo_Da_Vinci">
+    <ns1:paint>Monalisa</ns1:paint>
   </rdf:Description>
 </rdf:RDF>
