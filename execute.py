@@ -11,7 +11,7 @@ def main() -> None:
     load_dotenv('.env')
     corenlp_dir = os.environ.get('CORENLP_HOME', 'corenlp')
     
-    ann = Annotate("""Michael Jordan played basket""", corenlp_dir)
+    ann = Annotate("""Leonardo Da Vinci painted the Monalisa""", corenlp_dir)
     ex = Extraction(ann.doc, ann.get_tokens_as_dict())
     ordering = DataOrdering(ex)
     rdf_generator = RDF_Generator(ordering)
