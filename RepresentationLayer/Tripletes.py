@@ -6,9 +6,4 @@ class Tripletes:
         
         self.subject = subject
         self.predicate = predicate
-        self.object = object
-
-    def generate_output(self, format: str = 'rdf'):
-        pass
-
-    
+        self.object = object    

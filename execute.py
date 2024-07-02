@@ -1,10 +1,10 @@
 from DataLayer.Annotate import Annotate
 from KnowledgeExtractionLayer.Extraction import Extraction
+from RepresentationLayer.RDF_Generator import RDF_Generator
+from RepresentationLayer.DataOrdering import DataOrdering
+
 from dotenv import load_dotenv
 import os
-import sys
-import signal
-from RepresentationLayer.RDF_Generator import rdf_generator
 
 def main() -> None:
     
@@ -13,8 +13,8 @@ def main() -> None:
     
     ann = Annotate("""Michael Jordan played basket""", corenlp_dir)
     ex = Extraction(ann.doc, ann.get_tokens_as_dict())
-    for i in ex.relations:
-        rdf_generator(i)
+    ordering = DataOrdering(ex)
+    rdf_generator = RDF_Generator(ordering)
 
 
 
