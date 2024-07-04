@@ -43,10 +43,11 @@ Se encarga de anotar el texto de entrada. Estas anotaciones son utilizadas poste
 
 Para cada *token* que se identifica, se obtienen las siguientes caracteristicas
 
--
--
--
--
+- lemma: Lema de la palabra
+- pos: Categoria gramatical universal  
+- xpos: Categoria gramatical del idioma 
+- head: Indice del head en el arbol
+- deprel: Relacion de dependencia con el head
 
 ## Extraccion de conocimiento.
 En esta parte se extraen las entidades y relaciones. Se utilizo el servidor de CoreNLP para obtener las relaciones. Para vincular las entidades y relaciones se utilizaron las APIs the *dbpedia-spotlight* y *babelfy*. 
