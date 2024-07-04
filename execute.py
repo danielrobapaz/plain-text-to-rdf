@@ -14,7 +14,7 @@ def main() -> None:
     ann = Annotate("""Leonardo Da Vinci painted the Monalisa""", corenlp_dir)
     ex = Extraction(ann.doc, ann.get_tokens_as_dict())
     ordering = DataOrdering(ex)
-    rdf_generator = RDF_Generator(ordering)
+    rdf_generator = RDF_Generator(ordering, ex.relations_linking, ex.entities)
 
 
 
