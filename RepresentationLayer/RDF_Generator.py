@@ -5,11 +5,14 @@ from rdflib import Graph, Literal, RDF, URIRef
 from rdflib.namespace import FOAF, XSD
 
 class RDF_Generator:
-    def __init__(self, data_ordering: DataOrdering, rel_dict: dict, ent_dict: dict) -> None:
+    def __init__(self, data_ordering: DataOrdering, rel_dict: dict, ent_dict: dict, filename: str) -> None:
         self.rel_dict = rel_dict
         self.ent_dict = ent_dict
+        self.filename = filename
         for (index, triplete) in enumerate(data_ordering.get_tripletes()):
             self.rdf_generator(triplete,index)
+
+            
     
     def rdf_generator(self, tripletas: Tripletes, index = int):
     
@@ -34,6 +37,6 @@ class RDF_Generator:
 
         g.add((subject, relation, object_))
             
-        g.serialize(destination=f'{index}.rdf', format='xml')
+        g.serialize(destination=f'./test/{self.filename}/{index}.rdf', format='xml')
 
         print("Archivo RDF creado con éxito")
