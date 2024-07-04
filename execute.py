@@ -15,7 +15,7 @@ def main() -> None:
     
 
     for filename in os.listdir(test_folder):
-        print(filename)
+        print(f'Archivo de texto: {filename}')
         if filename.endswith('.txt'):
             file_path = os.path.join(test_folder, filename)
             with open(file_path, 'r', encoding='utf-8') as file:
