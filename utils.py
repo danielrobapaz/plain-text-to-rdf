@@ -28,6 +28,12 @@ def map_triple_to_dict(triple,tokens_dict) -> dict:
 
     if len(triple.relation.split(" ")) > 1:
         filtered_relation = remove_stopwords(triple.relation)
+        if len(filtered_relation.split(" ")) > 1:
+            for word in filtered_relation.split(" "):
+                if tokens_dict[word]["pos"][0] == "VERB":
+                    filtered_relation = word
+        if len(filtered_relation.split(" ")) > 1:
+            filtered_relation = filtered_relation.split(" ")[0]
     else:
         filtered_relation = triple.relation
 
@@ -47,12 +53,18 @@ def map_triple_to_dict(triple,tokens_dict) -> dict:
     #     'relation': tokens_dict[filtered_relation]["lemma"][0],
     #                 ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
     # KeyError: 'charges toward'
-
-    return {
+    if len(filtered_relation) == 0:
+        return {
         'subject': triple.subject,
-        'relation': tokens_dict[filtered_relation]["lemma"][0],
+        'relation': 'Relates_To',
         'object': triple.object
-    }
+        }
+    else:
+        return {
+            'subject': triple.subject,
+            'relation': tokens_dict[filtered_relation]["lemma"][0],
+            'object': triple.object
+        }
 
 def kill_process_using_port(port):
         for proc in psutil.process_iter(['pid', 'name', 'connections']):
@@ -60,7 +72,7 @@ def kill_process_using_port(port):
                 if conn.laddr.port == port:
                     # print(f"Killing process {proc.info['pid']} ({proc.info['name']}) using port {port}")
                     proc.terminate()
-                    proc.wait()  # Esperar a que el proceso termine
+                    proc.wait() 
                     return True
                 
 def remove_stopwords(input_text):
