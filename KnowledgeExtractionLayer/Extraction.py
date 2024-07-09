@@ -4,7 +4,6 @@ from . import EntityLinking
 from stanza.server import CoreNLPClient
 import utils
 
-
 class Extraction:
     def __init__(self, 
                  tokenized_doc: Document,
@@ -17,22 +16,25 @@ class Extraction:
         self.extract_entities()
         self.extract_relations(tokens)
 
-        self.calculate_statistics()
-        
-    def extract_relations(self,tokens_dict) -> None:
+        self.calculate_statistics() 
+
+    def extract_relations(self, tokens_dict) -> None:
         relations = []
 
-        with CoreNLPClient(annotators=["openie"],
-                           endpoint='http://localhost:9500',
-                           be_quiet=True) as client:
-            ann = client.annotate(self.doc.text)
-
-            for sentence in ann.sentence:
-                for triple in sentence.openieTriple:
-                    relations.append(utils.map_triple_to_dict(triple,tokens_dict))
-
-        self.relations = relations
+        # Crear instancia de CoreNLPClient
+        client = CoreNLPClient(annotators=["openie"],
+                               endpoint='http://localhost:9500',
+                               be_quiet=True)
         
+        # Anotar el texto con el cliente
+        ann = client.annotate(self.doc.text)
+
+        for sentence in ann.sentence:
+            for triple in sentence.openieTriple:
+                relations.append(utils.map_triple_to_dict(triple, tokens_dict))
+    
+        self.relations = relations
+
         relations_to_link = [r['relation'] for r in relations]
         el = EntityLinking.EntityLinking(relations_to_link)
         self.relations_linking = el.get_linked_relations()

@@ -18,16 +18,18 @@ class RDF_Generator:
     
         g = Graph()
 
+        namespace = "http://example.org/"
+
         try:
             self.ent_dict[tripletas.subject]
             subject = URIRef(self.ent_dict[tripletas.subject][0])
         except:
-            return print("No hay una URI asociada a la entidad, RDF no creado.")
+            subject = URIRef(namespace + tripletas.subject.replace(" ", "_"))
         try:
             self.rel_dict[tripletas.predicate]
             relation = URIRef(self.rel_dict[tripletas.predicate][0])
         except:
-            return print("No hay una URI asociada a la relacion/predicado, RDF no creado.")
+            relation = URIRef(namespace + tripletas.predicate)
         try:
             self.ent_dict[tripletas.object]
             object_ = URIRef(self.ent_dict[tripletas.object][0])
@@ -35,8 +37,11 @@ class RDF_Generator:
             object_ = Literal(tripletas.object)
 
 
-        g.add((subject, relation, object_))
-            
-        g.serialize(destination=f'./test/{self.filename}/{index}.rdf', format='xml')
+        if len(subject) > 0 and len(relation) > 0 and len(object_) > 0:
+            g.add((subject, relation, object_))
+            g.serialize(destination=f'./test/{self.filename}/{index}.rdf', format='xml')
+            print("Archivo RDF creado con éxito")
+        else:
+            print(f"Some argument was empty, check for errors in text. Subject {subject}, Relation {relation}, Object {object_}")
 
-        print("Archivo RDF creado con éxito")
+        

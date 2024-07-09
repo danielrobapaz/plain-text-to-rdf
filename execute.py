@@ -2,12 +2,17 @@ from DataLayer.Annotate import Annotate
 from KnowledgeExtractionLayer.Extraction import Extraction
 from RepresentationLayer.RDF_Generator import RDF_Generator
 from RepresentationLayer.DataOrdering import DataOrdering
-
+import nltk
 from dotenv import load_dotenv
 import os
+from utils import kill_process_using_port
 
 def main() -> None:
-    
+
+    nltk.download('stopwords',quiet=True)
+
+    kill_process_using_port(9500)
+
     load_dotenv('.env')
     corenlp_dir = os.environ.get('CORENLP_HOME', 'corenlp')
     
@@ -15,7 +20,7 @@ def main() -> None:
     
 
     for filename in os.listdir(test_folder):
-        print(f'Archivo de texto: {filename}')
+        print(f'\nArchivo de texto: {filename}')
         if filename.endswith('.txt'):
             file_path = os.path.join(test_folder, filename)
             with open(file_path, 'r', encoding='utf-8') as file:
@@ -27,6 +32,7 @@ def main() -> None:
             ex = Extraction(ann.doc, ann.get_tokens_as_dict())
             ordering = DataOrdering(ex)
             RDF_Generator(ordering, ex.relations_linking, ex.entities, file_real_name)
+            kill_process_using_port(9500)
 
 
 
