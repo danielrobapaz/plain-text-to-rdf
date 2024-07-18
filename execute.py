@@ -6,6 +6,8 @@ import nltk
 from dotenv import load_dotenv
 import os
 from utils import kill_process_using_port
+import sys
+from ComandLineArguments import ComandLineArguments
 
 def main() -> None:
 
@@ -17,22 +19,25 @@ def main() -> None:
     corenlp_dir = os.environ.get('CORENLP_HOME', 'corenlp')
     
     test_folder = f'./test'
-    
 
-    for filename in os.listdir(test_folder):
-        print(f'\nArchivo de texto: {filename}')
-        if filename.endswith('.txt'):
-            file_path = os.path.join(test_folder, filename)
-            with open(file_path, 'r', encoding='utf-8') as file:
-                text = file.read()
-            file_real_name = filename.replace('.txt', '')
-            os.makedirs(f'./test/{file_real_name}', exist_ok=True)
+    arguments = sys.argv
+    argument_parsers = ComandLineArguments(arguments)
+        
+    file_path = argument_parsers.get_value('-f', '--file')
 
-            ann = Annotate(text, corenlp_dir)
-            ex = Extraction(ann.doc, ann.get_tokens_as_dict())
-            ordering = DataOrdering(ex)
-            RDF_Generator(ordering, ex.relations_linking, ex.entities, file_real_name)
-            kill_process_using_port(9500)
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            text = file.read()
+        file_real_name = file_path.split("/")[-1].replace('.txt', '')
+        os.makedirs(f'./test/{file_real_name}', exist_ok=True)
+    except:
+        raise Exception("Invalid path. No file found.")
+
+    ann = Annotate(text, corenlp_dir)
+    ex = Extraction(ann.doc, ann.get_tokens_as_dict())
+    ordering = DataOrdering(ex)
+    RDF_Generator(ordering, ex.relations_linking, ex.entities, file_real_name)
+    kill_process_using_port(9500)
 
 
 
