@@ -42,7 +42,7 @@ class Extraction:
 
     def extract_entities(self) -> None:
         doc_entities = self.doc.entities
-        entities = [e.text  for e in doc_entities]
+        entities = [e.text for e in doc_entities]
         
         el = EntityLinking.EntityLinking(entities)
         self.entities = el.get_linked_entities()
@@ -68,7 +68,7 @@ class Extraction:
         print(self.relations)
 
     def calculate_statistics(self) -> None:
-        print('Estadisticas sobre la extraccion de conocimiento: ')
+        print('\nEstadisticas sobre la extraccion de conocimiento: \n')
 
         print(f"Cantidad de entidades: {len(self.relations)}")
 

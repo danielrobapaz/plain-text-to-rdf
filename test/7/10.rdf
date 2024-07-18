@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:ns1="http://dbpedia.org/resource/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="http://example.org/organisations">
+    <ns1:Language_of_adoption>private cloud</ns1:Language_of_adoption>
+  </rdf:Description>
+</rdf:RDF>

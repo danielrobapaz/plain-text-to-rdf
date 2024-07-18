@@ -13,7 +13,7 @@ class EntityLinking:
             map = {}
             def get_entities_thread(entities: list[str] = [], map: dict = {}) -> None:
                 for entity in entities:
-                    map[entity] = [self.__get_resource_babelfy(entity),
+                    map[entity] = [self.__get_resource_babelfy(entity.capitalize()),
                                    self.__get_resource_spotlight(entity)]
             
             size_to_thread = n//3
@@ -34,15 +34,18 @@ class EntityLinking:
             t3.join()
 
             self.map = map
+
         else:
             for entity in entities:
-                self.map[entity] = [self.__get_resource_babelfy(entity),
-                                    self.__get_resource_spotlight(entity)]
+                self.map[entity] = [self.__get_resource_babelfy(entity.capitalize()),
+                                    self.__get_resource_spotlight(entity)] 
 
     def get_linked_entities(self,) -> dict:
+        # print(f'Entities \n {self.map}')
         return self.map
     
     def get_linked_relations(self, ) -> dict:
+        # print(f'Relations \n {self.map}')
         return self.map
     
     def __get_resource_babelfy(self, entity: str) -> str:

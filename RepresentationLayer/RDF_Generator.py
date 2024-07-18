@@ -44,6 +44,7 @@ class RDF_Generator:
             print("Archivo RDF creado con éxito")
         elif len(subject) > 0 and len(object_) > 0 and len(relation) == 0:
             g.add((subject, URIRef(namespace + tripletas.predicate), object_))
+            g.serialize(destination=f'./test/{self.filename}/{index}.rdf', format='xml')
         else:
             print(f"Some argument was empty, check for errors in text. Subject {subject}, Relation {relation}, Object {object_}")
 
