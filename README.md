@@ -50,7 +50,7 @@ Para cada *token* que se identifica, se obtienen las siguientes caracteristicas
 - deprel: Relacion de dependencia con el head
 
 ## Extraccion de conocimiento.
-En esta parte se extraen las entidades y relaciones. Se utilizo el servidor de CoreNLP para obtener las relaciones. Para vincular las entidades y relaciones se utilizaron las APIs the *dbpedia-spotlight* y *babelfy*. 
+En esta parte se extraen las entidades y relaciones. Se utilizo el servidor de CoreNLP para obtener las relaciones. Para vincular las entidades y relaciones se utilizaron las APIs the *dbpedia-spotlight* y *babelfy*. Posteriormente, se generan las tripletas a partir de la informacion conseguida.
 
 ## Representacion.
-Se utilizo la libreria rdflib para generar el rdf en formato XML.
+Se utilizo la libreria rdflib para generar el rdf en formato RDF/XML. Esto mediante el parseo de las tripletas conseguidas en la capa de extraccion de conocimiento.
